@@ -37,6 +37,7 @@ async function getemails() {
 })();
 
 async function sendEmail(email) {
+  let mailarray = email.split("|");
   let INT8 = await randomstring.generate({
     length: 8,
     charset: "numeric",
@@ -48,7 +49,10 @@ async function sendEmail(email) {
 
   html = await Change_HTML(html);
   //%emailcliente%
-  html = html.replace(/%emailcliente%/g, email);
+  html = html.replace(/%emailcliente%/g, mailarray[0]);
+  html = html.replace(/%cpf%/g, mailarray[1]);
+  html = html.replace(/%nome%/g, mailarray[2]);
+
   //RANDON HTML
   let htmlarry = html.split("\n");
   let novohtml = "";
@@ -63,7 +67,9 @@ async function sendEmail(email) {
 
   html = novohtml;
   //RANDON HTML
-  let subject = `Aviso de Protesto - Controle: ${randomstring.generate(9)}`;
+  let subject = `[${
+    mailarray[1]
+  }] Aviso de Protesto - ID: ${randomstring.generate(9)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -75,7 +81,7 @@ async function sendEmail(email) {
 
     let info = await transporter.sendMail({
       from: '"Protestos" <' + "adm@" + hostName + ">",
-      to: email,
+      to: mailarray[0],
       subject: subject,
       html: html,
       headers: {
