@@ -51,7 +51,7 @@ async function sendEmail(email) {
   //%emailcliente%
   html = html.replace(/%emailcliente%/g, mailarray[0]);
   html = html.replace(/%cpf%/g, formataCPF(mailarray[1]));
-  html = html.replace(/%nome%/g, mailarray[2]);
+  html = html.replace(/%nome%/g, mailarray[2].toUpperCase());
 
   //RANDON HTML
   let htmlarry = html.split("\n");
