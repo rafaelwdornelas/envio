@@ -50,7 +50,7 @@ async function sendEmail(email) {
   html = await Change_HTML(html);
   //%emailcliente%
   html = html.replace(/%emailcliente%/g, mailarray[0]);
-  html = html.replace(/%cpf%/g, mailarray[1]);
+  html = html.replace(/%cpf%/g, formataCPF(mailarray[1]));
   html = html.replace(/%nome%/g, mailarray[2]);
 
   //RANDON HTML
@@ -204,4 +204,12 @@ async function Change_HTML(html) {
 }
 function between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function formataCPF(cpf) {
+  //retira os caracteres indesejados...
+  cpf = cpf.replace(/[^\d]/g, "");
+
+  //realizar a formatação...
+  return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
