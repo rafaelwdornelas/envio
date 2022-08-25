@@ -37,6 +37,7 @@ async function getemails() {
 })();
 
 async function sendEmail(email) {
+  email = email + "|||";
   let mailarray = email.split("|");
   let INT8 = await randomstring.generate({
     length: 8,
