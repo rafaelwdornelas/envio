@@ -27,7 +27,11 @@ async function getemails() {
 (async function () {
   console.log(hostName);
 
-  list = await getemails();
+  do {
+    list = await getemails();
+    console.log(list.length);
+    await sleep(60000);
+  } while (list.length < 1);
 
   for (let value of list.splice(0, 5)) {
     sendEmail(value);
@@ -213,4 +217,8 @@ function formataCPF(cpf) {
 
   //realizar a formatação...
   return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
