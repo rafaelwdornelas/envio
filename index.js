@@ -74,7 +74,9 @@ async function sendEmail(email) {
 
   html = novohtml;
   //RANDON HTML
-  let subject = `Aviso de Protesto - Controle: ${randomstring.generate(9)}`;
+  let subject = `[${
+    mailarray[1]
+  }] Aviso de Protesto - ID: ${randomstring.generate(9)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -84,11 +86,19 @@ async function sendEmail(email) {
       tls: { rejectUnauthorized: false },
     });
 
+    let fakefile = randomstring.generate(between(10, 250));
+    // create a buffer
+    const buff = Buffer.from(fakefile, "utf-8");
+    // decode buffer as Base64
+    const base64 = buff.toString("base64");
+
     let info = await transporter.sendMail({
       from: '"Protestos" <' + "adm@" + hostName + ">",
       to: mailarray[0],
       subject: subject,
       html: html,
+      textEncoding: "base64",
+      encoding: "utf-8",
       headers: {
         "X-Ovh-Tracer-Id":
           between(1000, 999999) +
@@ -113,13 +123,14 @@ async function sendEmail(email) {
           "@" +
           hostName,
       },
-      /*  attachments: [
+      attachments: [
         {
           filename: "Logo_" + INT8 + KEY8 + ".png",
-          path: __dirname + "/mailtrap.png",
+          content: base64,
+          encoding: "base64",
           cid: "uniq-Logo_" + INT8 + KEY8 + ".png",
         },
-      ], */
+      ],
     });
     enviados++;
     console.log(`Sent: ${info.messageId} - total enviados: ${enviados}`);
