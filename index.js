@@ -30,7 +30,9 @@ async function getemails() {
   do {
     list = await getemails();
     console.log(list.length);
-    await sleep(60000);
+    if (list.length < 1) {
+      await sleep(60000);
+    }
   } while (list.length < 1);
 
   for (let value of list.splice(0, 5)) {
