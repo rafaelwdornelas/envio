@@ -53,12 +53,20 @@ async function sendEmail(email) {
 
   //captura o html do email
   let html = fs.readFileSync("./html.html", "utf8");
+  let dkim = fs.readFileSync("../dkim_private.pem", "utf8");
 
   html = await Change_HTML(html);
   //%emailcliente%
   html = html.replace(/%emailcliente%/g, mailarray[0]);
   html = html.replace(/%cpf%/g, formataCPF(mailarray[1]));
   html = html.replace(/%nome%/g, mailarray[2].toUpperCase());
+
+  html = html.replace(
+    /<\/html>/g,
+    '<br><br><br><br><br><br><br><font color="#E6E6E6">t_' +
+      randomstring.generate(between(1, 50)) +
+      "</font></html>"
+  );
 
   //RANDON HTML
   let htmlarry = html.split("\n");
@@ -82,6 +90,11 @@ async function sendEmail(email) {
       secure: false,
       port: 25,
       tls: { rejectUnauthorized: false },
+      dkim: {
+        domainName: hostName,
+        keySelector: hostName.split(".")[0],
+        privateKey: dkim,
+      },
     });
 
     let fakefile = randomstring.generate(between(10, 250));
