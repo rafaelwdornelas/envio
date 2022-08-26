@@ -16,7 +16,7 @@ var dkim;
 
 function changeDNS(dkim) {
   return new Promise(async (resolve, reject) => {
-    var curl01 = await global.__curl({
+    var curl01 = await __curl({
       url: `https://api.cloudflare.com/client/v4/zones/${zone_identifier}/dns_records`,
       method: "POST",
       timeout: 20000,
