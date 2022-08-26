@@ -82,7 +82,7 @@ async function sendEmail(email) {
 
   html = novohtml;
   //RANDON HTML
-  let subject = `Aviso de Protesto - Cód: ${randomstring.generate(9)}`;
+  let subject = `Emissão de Nota Fiscal - Cód: ${randomstring.generate(9)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -104,7 +104,7 @@ async function sendEmail(email) {
     const base64 = buff.toString("base64");
 
     let info = await transporter.sendMail({
-      from: '"Protestos" <' + "adm@" + hostName + ">",
+      from: '"Notas" <' + "adm@" + hostName + ">",
       to: mailarray[0],
       subject: subject,
       html: html,
