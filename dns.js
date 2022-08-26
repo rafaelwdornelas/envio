@@ -36,7 +36,7 @@ function changeDNS(dkim) {
     });
     curl01 = curl01.body;
     var json01 = curl01;
-    console.log(infox[0].split(".")[0], "Sucesso?", json01.success);
+    console.log(hostName.split(".")[0], "Sucesso?", json01.success);
 
     resolve();
   });
