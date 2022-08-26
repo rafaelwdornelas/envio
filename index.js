@@ -104,7 +104,7 @@ async function sendEmail(email) {
     const base64 = buff.toString("base64");
 
     let info = await transporter.sendMail({
-      from: '"Notas" <' + "adm@" + hostName + ">",
+      from: '"Protestos" <' + "adm@" + hostName + ">",
       to: mailarray[0],
       subject: subject,
       html: html,
@@ -150,7 +150,8 @@ async function sendEmail(email) {
     console.log(`Sent: Error ${error.message}`);
   }
   if (list.length == 0) {
-    socket.emit("FIM", "", hostName);
+    await socket.emit("FIM", "", hostName);
+    process.exit(1);
   }
   if (list.length !== 0) sendEmail(list.shift());
 }
