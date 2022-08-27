@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOMINIO="$1"
-
+echo "Nome do Dominio: $DOMINIO"
 echo $DOMINIO > /etc/hostname
 echo "127.0.1.2  $DOMINIO" >> /etc/hosts
 echo $DOMINIO > /etc/mailname
@@ -27,4 +27,4 @@ node dns.js
 sudo /etc/init.d/apache2 restart
 sudo /etc/init.d/postfix restart
 history -c
-acho "INSTALAÇÂO COMCLUIDA"
+echo "INSTALAÇÂO COMCLUIDA"
