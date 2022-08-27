@@ -2,11 +2,6 @@
 
 DOMINIO="$1"
 
-sudo passwd
-@Linux2022
-@Linux2022
-su
-@Linux2022
 echo $DOMINIO > /etc/hostname
 echo "127.0.1.2  $DOMINIO" >> /etc/hosts
 echo $DOMINIO > /etc/mailname
