@@ -27,4 +27,4 @@ node dns.js
 sudo /etc/init.d/apache2 restart
 sudo /etc/init.d/postfix restart
 history -c
-echo "INSTALAÇÂO COMCLUIDA"
+echo "INSTALAÇÂO CONCLUIDA"
