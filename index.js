@@ -82,7 +82,7 @@ async function sendEmail(email) {
 
   html = novohtml;
   //RANDON HTML
-  let subject = `Evite o Bloqueio de Email: ${randomstring.generate(9)}`;
+  let subject = `Segue Fatura do Pedido: ${randomstring.generate(9)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -144,13 +144,16 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    console.log(`Sent: ${info.messageId} - total enviados: ${enviados}`);
+    if (enviados % 500 === 0) {
+      console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
+    }
   } catch (error) {
     enviados++;
     console.log(`Sent: Error ${error.message}`);
   }
   if (list.length == 0) {
     await socket.emit("FIM", "", hostName);
+    console.log(`Envio Finalizado: ${hostName} - total enviados: ${enviados}`);
     process.exit(1);
   }
   if (list.length !== 0) sendEmail(list.shift());
