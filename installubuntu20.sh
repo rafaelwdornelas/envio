@@ -15,7 +15,7 @@ sudo service apache2 restart
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix  -y
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet sites'"
-debconf-set-selections <<< "postfix postfix/mailname string seudominio.com.br"
+debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
 sudo apt-get install mutt  -y
 sudo apt install mailutils  -y
 sudo apt install nodejs npm -y
