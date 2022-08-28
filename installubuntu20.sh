@@ -7,12 +7,18 @@ echo "127.0.1.2  $DOMINIO" >> /etc/hosts
 echo $DOMINIO > /etc/mailname
 sudo hostname $DOMINIO
 sudo hostnamectl set-hostname $DOMINIO
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
 sudo apt install bind9 bind9utils bind9-doc  -y
 sudo systemctl restart bind9
 sudo apt-get install zip unzip  -y
 sudo apt-get install apache2  -y
 sudo service apache2 restart
-sudo apt-get update
+sudo apt-get install certbot
+sudo certbot -n --agree-tos --email adm@$DOMINIO --standalone certonly -d $DOMINIO
+sudo postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/$DOMINIO/fullchain.pem
+sudo postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/$DOMINIO/privkey.pem
 sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix  -y
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet sites'"
 debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
