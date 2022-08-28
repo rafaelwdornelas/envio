@@ -19,20 +19,20 @@ debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet si
 debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
 sudo mkdir -p /etc/configs/ssl/new/
 sudo openssl genrsa -des3 --passout pass:1111 -out certificado.key 2048
-sudo openssl req -new -passin pass:1111 -key certificado.key -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=certificado"  -out certificado.csr
+sudo openssl req -new -passin pass:1111 -key certificado.key -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=$DOMINIO"  -out certificado.csr
 sudo openssl x509 -req --passin  pass:1111 -days 365 -in certificado.csr -signkey certificado.key -out certificado.cer
 sudo openssl rsa --passin pass:1111  -in certificado.key -out certificado.key.nopass
 sudo mv -f certificado.key.nopass certificado.key
-sudo openssl req -new -x509 -extensions v3_ca -passout pass:1111 -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=certificado"  -keyout cakey.pem -out cacert.pem -days 3650
+sudo openssl req -new -x509 -extensions v3_ca -passout pass:1111 -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=$DOMINIO"  -keyout cakey.pem -out cacert.pem -days 3650
 sudo chmod 600 certificado.key
 sudo chmod 600 cakey.pem
 sudo mv certificado.key /etc/configs/ssl/new
 sudo mv certificado.cer /etc/configs/ssl/new
 sudo mv cakey.pem /etc/configs/ssl/new
 sudo mv cacert.pem /etc/configs/ssl/new
-sudo postconf -e 'smtpd_tls_key_file = /etc/configs/ssl/$DOMINIO/$DOMINIO.key'
-sudo postconf -e 'smtpd_tls_cert_file = /etc/configs/ssl/$DOMINIO/$DOMINIO.cer'
-sudo postconf -e 'smtpd_tls_CAfile = /etc/configs/ssl/$DOMINIO/cacert.pem'
+sudo postconf -e 'smtpd_tls_key_file = /etc/configs/ssl/new/certificado.key'
+sudo postconf -e 'smtpd_tls_cert_file = /etc/configs/ssl/new/certificado.cer'
+sudo postconf -e 'smtpd_tls_CAfile = /etc/configs/ssl/new/cacert.pem'
 sudo postconf -e smtpd_use_tls=yes
 sudo apt-get install mutt  -y
 sudo apt install mailutils  -y
