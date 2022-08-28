@@ -8,14 +8,16 @@ echo $DOMINIO > /etc/mailname
 sudo hostname $DOMINIO
 sudo hostnamectl set-hostname $DOMINIO
 sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt install bind9 bind9utils bind9-doc  -y
 sudo systemctl restart bind9
 sudo apt-get install zip unzip  -y
 sudo apt-get install apache2  -y
 sudo service apache2 restart
-sudo apt-get install certbot
+sudo apt install snapd
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot -n --agree-tos --email adm@$DOMINIO --standalone certonly -d $DOMINIO
 sudo postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/$DOMINIO/fullchain.pem
 sudo postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/$DOMINIO/privkey.pem
