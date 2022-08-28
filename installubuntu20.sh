@@ -19,6 +19,7 @@ sudo apt-get install certbot
 sudo certbot -n --agree-tos --email adm@$DOMINIO --standalone certonly -d $DOMINIO
 sudo postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/$DOMINIO/fullchain.pem
 sudo postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/$DOMINIO/privkey.pem
+sudo postconf -e smtpd_use_tls=yes
 sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix  -y
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet sites'"
 debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
