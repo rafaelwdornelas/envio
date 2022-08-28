@@ -1,5 +1,4 @@
 #!/bin/bash
-
 DOMINIO="$1"
 echo "Nome do Dominio: $DOMINIO"
 echo $DOMINIO > /etc/hostname
