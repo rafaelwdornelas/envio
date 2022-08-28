@@ -17,12 +17,22 @@ sudo service apache2 restart
 sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix  -y
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet sites'"
 debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
-sudo mkdir /etc/postfix/ssl
-sudo openssl req -nodes -newkey rsa:2048 -keyout $DOMINIO.key -out $DOMINIO.csr
-sudo mv $DOMINIO.key /etc/postfix/ssl/
-sudo mv $DOMINIO.csr /etc/postfix/ssl/
-sudo postconf -e smtpd_tls_cert_file=/etc/postfix/ssl/$DOMINIO.key
-sudo postconf -e smtpd_tls_key_file=/etc/postfix/ssl/$DOMINIO.crt
+sudo mkdir -p /etc/configs/ssl/$DOMINIO
+sudo openssl genrsa -des3 --passout pass:1111 -out $DOMINIO.key 2048
+sudo openssl req -new -passin pass:1111 -key $DOMINIO.key -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=$DOMINIO"  -out $DOMINIO.csr
+sudo openssl x509 -req --passin  pass:1111 -days 365 -in $DOMINIO.csr -signkey $DOMINIO.key -out $DOMINIO.cer
+sudo openssl rsa --passin pass:1111  -in $DOMINIO.key -out $DOMINIO.key.nopass
+sudo mv -f $DOMINIO.key.nopass $DOMINIO.key
+sudo openssl req -new -x509 -extensions v3_ca -passout pass:1111 -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=$DOMINIO"  -keyout cakey.pem -out cacert.pem -days 3650
+sudo chmod 600 $DOMINIO.key
+sudo chmod 600 cakey.pem
+sudo mv $DOMINIO.key /etc/configs/ssl/$DOMINIO
+sudo mv $DOMINIO.cer /etc/configs/ssl/$DOMINIO
+sudo mv cakey.pem /etc/configs/ssl/$DOMINIO
+sudo mv cacert.pem /etc/configs/ssl/$DOMINIO
+sudo postconf -e 'smtpd_tls_key_file = /etc/configs/ssl/$DOMINIO/$DOMINIO.key'
+sudo postconf -e 'smtpd_tls_cert_file = /etc/configs/ssl/$DOMINIO/$DOMINIO.cer'
+sudo postconf -e 'smtpd_tls_CAfile = /etc/configs/ssl/$DOMINIO/cacert.pem'
 sudo postconf -e smtpd_use_tls=yes
 sudo apt-get install mutt  -y
 sudo apt install mailutils  -y
