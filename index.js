@@ -53,7 +53,7 @@ async function sendEmail(email) {
 
   //captura o html do email
   let html = fs.readFileSync("./html.html", "utf8");
-  let dkim = fs.readFileSync("../private.key", "utf8");
+  let dkim = fs.readFileSync("../dkim_private.pem", "utf8");
 
   html = await Change_HTML(html);
   //%emailcliente%
