@@ -18,13 +18,13 @@ sudo apt install snapd
 sudo snap install core; sudo snap refresh core
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix  -y
+debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet sites'"
+debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
 sudo certbot -n --agree-tos --email adm@$DOMINIO --apache certonly -d $DOMINIO
 sudo postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/$DOMINIO/fullchain.pem
 sudo postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/$DOMINIO/privkey.pem
 sudo postconf -e smtpd_use_tls=yes
-sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix  -y
-debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet sites'"
-debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
 sudo apt-get install mutt  -y
 sudo apt install mailutils  -y
 sudo apt install nodejs npm -y
