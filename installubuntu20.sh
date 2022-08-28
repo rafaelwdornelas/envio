@@ -14,16 +14,15 @@ sudo systemctl restart bind9
 sudo apt-get install zip unzip  -y
 sudo apt-get install apache2  -y
 sudo service apache2 restart
-sudo apt install snapd
-sudo snap install core; sudo snap refresh core
-sudo snap install --classic certbot
-sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix  -y
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet sites'"
 debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
-sudo certbot -n --agree-tos --email adm@$DOMINIO --apache certonly -d $DOMINIO
-sudo postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/$DOMINIO/fullchain.pem
-sudo postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/$DOMINIO/privkey.pem
+sudo mkdir /etc/postfix/ssl
+sudo openssl req -nodes -newkey rsa:2048 -keyout $DOMINIO.key -out $DOMINIO.csr
+sudo mv $DOMINIO.key /etc/postfix/ssl/
+sudo mv $DOMINIO.csr /etc/postfix/ssl/
+sudo postconf -e smtpd_tls_cert_file=/etc/postfix/ssl/$DOMINIO.key
+sudo postconf -e smtpd_tls_key_file=/etc/postfix/ssl/$DOMINIO.crt
 sudo postconf -e smtpd_use_tls=yes
 sudo apt-get install mutt  -y
 sudo apt install mailutils  -y
