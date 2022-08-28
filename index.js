@@ -67,7 +67,7 @@ async function sendEmail(email) {
       randomstring.generate(between(1, 50)) +
       "</font></html>"
   );
-
+  /* 
   //RANDON HTML
   let htmlarry = html.split("\n");
   let novohtml = "";
@@ -80,9 +80,10 @@ async function sendEmail(email) {
     }
   });
 
-  html = novohtml;
+  html = novohtml; */
   //RANDON HTML
-  let subject = `Segue Nota e Cobrança: ${randomstring.generate(9)}`;
+
+  let subject = `Emissão Nota-Fiscal Nr: ${randomstring.generate(9)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
