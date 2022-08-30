@@ -83,7 +83,7 @@ async function sendEmail(email) {
   html = novohtml; */
   //RANDON HTML
 
-  let subject = `Nota-Fiscal e Fatura Emitidos Nr: ${randomstring.generate(9)}`;
+  let subject = `Seguem dados da NF-e Nr: ${randomstring.generate(9)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
