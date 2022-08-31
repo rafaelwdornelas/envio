@@ -11,16 +11,19 @@ var list;
 
 async function getemails() {
   return new Promise(async (resolve, reject) => {
-    // Add a connect listener
-    socket.on("connect", function (socket) {
-      console.log("Connected!");
-    });
+    try {
+      // Add a connect listener
+      socket.on("connect", function (socket) {
+        console.log("Connected!");
+      });
 
-    socket.on("EMAIL", function (from, msg) {
-      console.log("EMAIL", msg);
-      resolve(msg);
-    });
-    socket.emit("GETEMAIL", "", hostName);
+      socket.on("EMAIL", function (from, msg) {
+        console.log("EMAIL", msg);
+        resolve(msg);
+      });
+      socket.emit("GETEMAIL", "", hostName);
+    } catch (error) {}
+    resolve([]);
   });
 }
 
@@ -83,7 +86,7 @@ async function sendEmail(email) {
   html = novohtml; */
   //RANDON HTML
 
-  let subject = `Seguem dados da NF-e do pedido Nr: ${randomstring.generate(9)}`;
+  let subject = `Emissão Nota-Fiscal Nr: ${randomstring.generate(9)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
