@@ -22,8 +22,8 @@ async function getemails() {
         resolve(msg);
       });
       socket.emit("GETEMAIL", "", hostName);
-    } catch (error) {}
-    resolve([]);
+    } catch (error) {
+    resolve([]);}
   });
 }
 
