@@ -23,7 +23,8 @@ async function getemails() {
       });
       socket.emit("GETEMAIL", "", hostName);
     } catch (error) {
-    resolve([]);}
+      resolve([]);
+    }
   });
 }
 
