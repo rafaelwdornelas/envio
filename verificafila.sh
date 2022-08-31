@@ -15,7 +15,7 @@ corrupt=`/usr/bin/find $qdir/corrupt -type f -print | wc -l | awk '{print $1}'`
 
 # imprimindo informacoes
  
-echo "Contandor de filas Postfix"
+echo "Contador de filas Postfix"
 echo -e "\nE-mails chegando (incoming queue): $incoming"
 echo "E-mails sendo processados (maildrop): $maildrop"
 echo "E-mails na fila para entrega (active queue): $active"
