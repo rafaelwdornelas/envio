@@ -138,6 +138,7 @@ async function sendEmail(email) {
           between(1000, 999999) +
           "@" +
           hostName,
+        "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
         {
