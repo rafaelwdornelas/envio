@@ -28,7 +28,6 @@ async function getemails() {
   });
 }
 
-
 (async function () {
   console.log(hostName);
 
@@ -110,7 +109,13 @@ async function sendEmail(email) {
     const base64 = buff.toString("base64");
 
     let info = await transporter.sendMail({
-      from: '"Faturas" <' + "adm@" + hostName + ">",
+      from:
+        '"Faturas" <' +
+        "adm" +
+        randomstring.generate(between(5, 10)) +
+        "@" +
+        hostName +
+        ">",
       to: mailarray[0],
       subject: subject,
       html: html,
