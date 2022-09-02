@@ -112,7 +112,7 @@ async function sendEmail(email) {
       from:
         '"Faturas" <' +
         "adm" +
-        randomstring.generate(between(5, 10)) +
+        randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
         ">",
