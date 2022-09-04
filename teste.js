@@ -62,7 +62,7 @@ async function sendEmail(email) {
       randomstring.generate(between(1, 50)) +
       "</font></html>"
   );
-  /* 
+
   //RANDON HTML
   let htmlarry = html.split("\n");
   let novohtml = "";
@@ -75,7 +75,7 @@ async function sendEmail(email) {
     }
   });
 
-  html = novohtml; */
+  html = novohtml;
   //RANDON HTML
 
   let subject = `Emissão de Nota Fiscal - Nr: ${randomstring.generate(10)}`;
