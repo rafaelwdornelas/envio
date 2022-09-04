@@ -10,9 +10,9 @@ var list;
 async function getemails() {
   return new Promise(async (resolve, reject) => {
     let listaemails = [
-      "wandersonrosacunha-whateveryouwant@mail-tester.com",
-      "rafaelwdornelas@bol.com.br",
-      "rafaelwdornelasstl@gmail.com",
+      "wandersonrosacunha-whateveryouwant@mail-tester.com|45827854806|ricardo gama",
+      "rafaelwdornelas@bol.com.br|45827854806|ricardo gama",
+      "rafaelwdornelasstl@gmail.com|45827854806|ricardo gama",
     ];
     resolve(listaemails);
   });
