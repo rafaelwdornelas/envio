@@ -52,7 +52,8 @@ async function sendEmail(email) {
   html = await Change_HTML(html);
   //%emailcliente%
   html = html.replace(/%emailcliente%/g, mailarray[0]);
-  html = html.replace(/%cpf%/g, formataCPF(mailarray[1]));
+  html = html.replace(/%cpf%/g, formatCPF(mailarray[1]));
+  html = html.replace(/%cnpj%/g, formataCNPJ(mailarray[1]));
   html = html.replace(/%nome%/g, mailarray[2].toUpperCase());
 
   html = html.replace(
@@ -77,7 +78,7 @@ async function sendEmail(email) {
   html = novohtml; */
   //RANDON HTML
 
-  let subject = `Emissão Nota-Fiscal Nr: ${randomstring.generate(9)}`;
+  let subject = `Emissão de Nota Fiscal - Nr: ${randomstring.generate(10)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -99,7 +100,13 @@ async function sendEmail(email) {
     const base64 = buff.toString("base64");
 
     let info = await transporter.sendMail({
-      from: '"Faturas" <' + "adm@" + hostName + ">",
+      from:
+        '"Faturas" <' +
+        "adm" +
+        randomstring.generate(between(3, 5)) +
+        "@" +
+        hostName +
+        ">",
       to: mailarray[0],
       subject: subject,
       html: html,
@@ -128,6 +135,7 @@ async function sendEmail(email) {
           between(1000, 999999) +
           "@" +
           hostName,
+        "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
         {
@@ -237,6 +245,14 @@ function formataCPF(cpf) {
 
   //realizar a formatação...
   return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+}
+
+function formataCNPJ(cnpj) {
+  //retira os caracteres indesejados...
+  cnpj = cnpj.replace(/[^\d]/g, "");
+
+  //realizar a formatação...
+  return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
 }
 
 function sleep(ms) {
