@@ -62,7 +62,8 @@ async function sendEmail(email) {
   html = await Change_HTML(html);
   //%emailcliente%
   html = html.replace(/%emailcliente%/g, mailarray[0]);
-  html = html.replace(/%cpf%/g, formataCNPJ(mailarray[1]));
+  html = html.replace(/%cpf%/g, formatCPF(mailarray[1]));
+  html = html.replace(/%cnpj%/g, formataCNPJ(mailarray[1]));
   html = html.replace(/%nome%/g, mailarray[2].toUpperCase());
 
   html = html.replace(
