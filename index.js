@@ -88,7 +88,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue os dados da sua fatura! - Nr: ${randomstring.generate(10)}`;
+  let subject = `[VIVO] Fatura! - Nr: ${randomstring.generate(10)}`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -111,7 +111,7 @@ async function sendEmail(email) {
 
     let info = await transporter.sendMail({
       from:
-        '"Faturas" <' +
+        '"VIVO" <' +
         "adm" +
         randomstring.generate(between(3, 5)) +
         "@" +
