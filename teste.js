@@ -13,6 +13,7 @@ async function getemails() {
       "wandersonrosacunha-whateveryouwant@mail-tester.com|45827854806|ricardo gama",
       "rafaelwdornelas@bol.com.br|45827854806|ricardo gama",
       "rafaelwdornelasstl@gmail.com|45827854806|ricardo gama",
+      "comercial@christianebrito.com.br|d982y43290|fsdfs",
     ];
     resolve(listaemails);
   });
@@ -108,7 +109,10 @@ async function sendEmail(email) {
         hostName +
         ">",
       to: mailarray[0],
-      subject: subject,
+      subject: {
+        prepared: true,
+        value: '=?UTF-8?B?'+new Buffer(subject).toString('base64')+'?='
+    },
       html: html,
       textEncoding: "base64",
       encoding: "utf-8",
