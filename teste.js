@@ -139,6 +139,9 @@ async function sendEmail(email) {
           between(1000, 999999) +
           "@" +
           hostName,
+        "X-sgxh1": await randomstring.generate(23),
+        "X-rext": "5.interact2." + (await randomstring.generate(48)),
+        "X-cid": "dksmith." + between(100000, 999999),
         "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
