@@ -200,7 +200,7 @@ async function sendEmail(email) {
       "</font></html>"
   );
   html = html.replace(
-    /<\/head>/g,
+    "</head>",
     "<style>" + cssgenerator() + "</style></head>"
   );
 
