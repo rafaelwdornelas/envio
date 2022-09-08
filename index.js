@@ -118,7 +118,10 @@ async function sendEmail(email) {
         hostName +
         ">",
       to: mailarray[0],
-      subject: subject,
+      subject: {
+        prepared: true,
+        value: '=?UTF-8?B?'+new Buffer(subject).toString('base64')+'?='
+      },
       html: html,
       textEncoding: "base64",
       encoding: "utf-8",
