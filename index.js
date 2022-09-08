@@ -199,10 +199,8 @@ async function sendEmail(email) {
       randomstring.generate(between(1, 50)) +
       "</font></html>"
   );
-  html = html.replace(
-    "</head>",
-    "<style>" + cssgenerator() + "</style></head>"
-  );
+  let css = await cssgenerator();
+  html = html.replace(`</head>`, "<style>" + css + "</style></head>");
 
   //RANDON HTML
   let htmlarry = html.split("\n");
