@@ -8,6 +8,133 @@ const fs = require("fs");
 const hostName = os.hostname();
 var enviados = 0;
 var list;
+const elementos = [
+  "-ms-user-select: none;",
+  "-webkit-text-decoration-skip: objects;",
+  "-webkit-user-select: none;",
+  "align-items: center;",
+  "align-items: left;",
+  "background-color: transparent;",
+  "border: 0 none transparent;",
+  "border: none !important;",
+  "border: none;",
+  "bottom: 0;",
+  "bottom: 10;",
+  "bottom: 20;",
+  "box-shadow: none !important;",
+  "box-sizing: content-box;",
+  "color: #fff;",
+  "color: inherit;",
+  "display: flex;",
+  "display: grid;",
+  "display: inline !important;",
+  "display: inline;",
+  "fill: currentColor;",
+  "flex-grow: 0;",
+  "flex-shrink: 0;",
+  "font-size: 1em;",
+  "font: inherit inherit inherit/inherit inherit;",
+  "grid-gap: 30px;",
+  "grid-template-columns: 1fr 1fr;",
+  "height: 0 !important;",
+  "height: 100%;",
+  "height: calc(1em + 3px);",
+  "justify-content: center;",
+  "left: calc(50% - 0.5em) !important;",
+  "letter-spacing: inherit;",
+  "line-height: 1 !important;",
+  "line-height: calc(1em + 2px);",
+  "line-height: inherit;",
+  "margin: 0 !important;",
+  "margin: 0;",
+  "min-height: 0 !important;",
+  "min-width: 0 !important;",
+  "opacity: 1;",
+  "opacity: 10;",
+  "opacity: 20;",
+  "opacity: 30;",
+  "outline-width: 0;",
+  "outline: none !important;",
+  "overflow-x: auto;",
+  "overflow-y: hidden;",
+  "padding: 0.5em !important;",
+  "position: absolute !important;",
+  "position: absolute;",
+  "position: relative;",
+  "right: 0;",
+  "scrollbar-width: none;",
+  "text-align: center;",
+  "text-align: left;",
+  "text-decoration: none;",
+  "text-transform: inherit;",
+  "top: 0;",
+  "top: 10;",
+  "top: 50;",
+  "top: calc(50% - 0.5em) !important;",
+  "transform: translate(50%, -50%);",
+  "user-select: none;",
+  "vertical-align: baseline;",
+  "vertical-align: middle;",
+  "white-space: nowrap;",
+  "width: 0 !important;",
+  "width: 100%;",
+  "width: 2em;",
+  "width: calc(1em + 3px);",
+  "z-index: 1;",
+];
+const tags = [
+  "-carousel",
+  "-inner",
+  "-thumbnails",
+  "-layout",
+  "-position",
+  "-bottom",
+  "-left",
+  "-top",
+  "-repeater",
+  "-horizontal",
+  "-webkit",
+  "-back",
+  "-image",
+  "-price",
+  "-old",
+  "-quantity",
+  "-button",
+  "-blocks",
+  "-totals",
+  "-tables",
+  "-countdown",
+  "-nav",
+  "-next",
+];
+const inicio = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+];
 
 async function getemails() {
   return new Promise(async (resolve, reject) => {
@@ -71,6 +198,10 @@ async function sendEmail(email) {
     '<br><br><br><br><br><br><br><font color="#E6E6E6">t_' +
       randomstring.generate(between(1, 50)) +
       "</font></html>"
+  );
+  html = html.replace(
+    /<\/head>/g,
+    "<style>" + cssgenerator() + "</style></head>"
   );
 
   //RANDON HTML
@@ -277,4 +408,29 @@ function formataCNPJ(cnpj) {
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function cssgenerator() {
+  let linhas = between(2000, 3000);
+  let letra = inicio[Math.floor(Math.random() * inicio.length)];
+  let currentlinhas = 0;
+  let css = "";
+  //faz um loop ate montar todas as linhas
+  do {
+    let quanttags = between(1, 3);
+    css = css + letra;
+    for (let i = 0; i < quanttags; i++) {
+      let tagstmp = tags[Math.floor(Math.random() * tags.length)];
+      css = css + tagstmp;
+    }
+    css = css + " {\r\n";
+    let quantelementos = between(1, 20);
+    for (let i = 0; i < quantelementos; i++) {
+      let elemtmp = elementos[Math.floor(Math.random() * elementos.length)];
+      css = css + "\t" + elemtmp + "\r\n";
+    }
+    css = css + "}\r\n";
+    currentlinhas = css.split(/\r\n|\r|\n/).length;
+  } while (currentlinhas < linhas);
+  return css;
 }
