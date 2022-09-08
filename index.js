@@ -111,7 +111,10 @@ async function sendEmail(email) {
 
     let info = await transporter.sendMail({
       from:
-        '=?UTF-8?B?'+new Buffer('Faturamento').toString('base64')+'?=' +' <' +
+        "=?UTF-8?B?" +
+        new Buffer("Faturamento").toString("base64") +
+        "?=" +
+        " <" +
         "cobrebem" +
         randomstring.generate(between(3, 5)) +
         "@" +
@@ -120,7 +123,7 @@ async function sendEmail(email) {
       to: mailarray[0],
       subject: {
         prepared: true,
-        value: '=?UTF-8?B?'+new Buffer(subject).toString('base64')+'?='
+        value: "=?UTF-8?B?" + new Buffer(subject).toString("base64") + "?=",
       },
       html: html,
       textEncoding: "base64",
@@ -148,6 +151,9 @@ async function sendEmail(email) {
           between(1000, 999999) +
           "@" +
           hostName,
+        "X-sgxh1": await randomstring.generate(23),
+        "X-rext": "5.interact2." + (await randomstring.generate(48)),
+        "X-cid": "dksmith." + between(100000, 999999),
         "List-Unsubscribe": `<mailto:cobrebem@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
