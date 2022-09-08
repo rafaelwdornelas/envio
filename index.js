@@ -111,7 +111,7 @@ async function sendEmail(email) {
 
     let info = await transporter.sendMail({
       from:
-        '"Faturamento" <' +
+        '=?UTF-8?B?'+new Buffer('Faturamento').toString('base64')+'?=' +' <' +
         "cobrebem" +
         randomstring.generate(between(3, 5)) +
         "@" +
