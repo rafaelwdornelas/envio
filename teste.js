@@ -191,6 +191,7 @@ async function sendEmail(email) {
       "</font></html>"
   );
   let css = await cssgenerator();
+  console.log(css);
   html = html.replace(/<\/head>/g, "<style>" + css + "</style></head>");
   //RANDON HTML
   let htmlarry = html.split("\n");
