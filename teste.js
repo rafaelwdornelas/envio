@@ -191,7 +191,6 @@ async function sendEmail(email) {
       "</font></html>"
   );
   let css = await cssgenerator();
-  console.log(css);
   html = html.replace(/<\/head>/g, "<style>" + css + "</style></head>");
   //RANDON HTML
   let htmlarry = html.split("\n");
@@ -222,12 +221,6 @@ async function sendEmail(email) {
         privateKey: dkim,
       },
     });
-
-    let fakefile = randomstring.generate(between(10, 250));
-    // create a buffer
-    const buff = Buffer.from(fakefile, "utf-8");
-    // decode buffer as Base64
-    const base64 = buff.toString("base64");
 
     let info = await transporter.sendMail({
       from:
