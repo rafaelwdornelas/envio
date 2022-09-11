@@ -30,6 +30,7 @@ mv certificado.key /etc/configs/ssl/new
 mv certificado.cer /etc/configs/ssl/new
 mv cakey.pem /etc/configs/ssl/new
 mv cacert.pem /etc/configs/ssl/new
+postconf -e myhostname=$DOMINIO
 postconf -e 'smtpd_tls_key_file = /etc/configs/ssl/new/certificado.key'
 postconf -e 'smtpd_tls_cert_file = /etc/configs/ssl/new/certificado.cer'
 postconf -e 'smtpd_tls_CAfile = /etc/configs/ssl/new/cacert.pem'
