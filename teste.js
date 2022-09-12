@@ -140,7 +140,6 @@ async function getemails() {
       "wandersonrosacunha-whateveryouwant@mail-tester.com|45827854806|ricardo gama",
       "rafaelwdornelas@bol.com.br|45827854806|ricardo gama",
       "rafaelwdornelasstl@gmail.com|45827854806|ricardo gama",
-      "comercial@christianebrito.com.br|d982y43290|fsdfs",
     ];
     resolve(listaemails);
   });
