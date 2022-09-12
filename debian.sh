@@ -7,7 +7,7 @@ echo "127.0.1.2  $DOMINIO" >> /etc/hosts
 echo $DOMINIO > /etc/mailname
 hostname $DOMINIO
 hostnamectl set-hostname $DOMINIO
-apt-get install software-properties-common
+apt-get install software-properties-common -y
 apt-get update
 apt install bind9 bind9utils bind9-doc  -y
 systemctl restart bind9
