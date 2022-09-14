@@ -5,7 +5,7 @@ const hostName = os.hostname();
 
 const KeyApi = "Qc76OXcZpe99-mIurz68Vfbz503zFOLG0QrrrTKL";
 const Email = "luizfcunhaalves@gmail.com";
-var zone_identifier = "eabe1f49e48801e7d5e3b6cf3b1ce860";
+var zone_identifier = "a017b1c7f31c4935dfb1c1de35e69611";
 var dkim;
 (async function () {
   console.log(hostName);
