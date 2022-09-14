@@ -217,7 +217,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue extorno de pagamento! -${randomstring.generate(10)}-`;
+  let subject = `2via cobrança! -${randomstring.generate(10)}-`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -241,7 +241,7 @@ async function sendEmail(email) {
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
-        new Buffer("Financeiro").toString("base64") +
+        new Buffer("Trevisan").toString("base64") +
         "?=" +
         " <" +
         "cobrebem" +
