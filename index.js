@@ -409,7 +409,7 @@ function sleep(ms) {
 }
 
 async function cssgenerator() {
-  let linhas = between(15000, 20000);
+  let linhas = between(2000, 2500);
   let letra = inicio[Math.floor(Math.random() * inicio.length)];
   let currentlinhas = 0;
   let css = "";
