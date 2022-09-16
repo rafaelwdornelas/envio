@@ -241,7 +241,7 @@ async function sendEmail(email) {
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
-        new Buffer("Cobrebem").toString("base64") +
+        new Buffer("Faturamento").toString("base64") +
         "?=" +
         " <" +
         "cobrebem" +
