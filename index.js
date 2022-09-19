@@ -217,7 +217,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue Fatura! Cód:-${randomstring.generate(5)}-`;
+  let subject = `Segue arquivos de desligamento! ID:-${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -307,7 +307,7 @@ async function sendEmail(email) {
     console.log(`Envio Finalizado: ${hostName} - total enviados: ${enviados}`);
     process.exit(1);
   }
-  await sleep(800)
+  await sleep(100)
   if (list.length !== 0) sendEmail(list.shift());
 }
 
