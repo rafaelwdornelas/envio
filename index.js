@@ -195,7 +195,7 @@ async function sendEmail(email) {
 
   html = html.replace(
     /<\/html>/g,
-    '<br><br><br><br><br><br><br><font color="#E6E6E6">t_' +
+    '<br><br><br><br><br><br><font color="#fff">t_' +
       randomstring.generate(between(1, 50)) +
       "</font></html>"
   );
