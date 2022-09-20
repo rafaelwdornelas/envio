@@ -217,7 +217,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue arquivos de desligamento! ID:-${randomstring.generate(8)}-`;
+  let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
