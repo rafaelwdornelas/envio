@@ -196,7 +196,7 @@ async function sendEmail(email) {
   html = html.replace(
     /<\/html>/g,
     '<br><br><br><br><br><br><font color="#fff">t_' +
-      randomstring.generate(between(1, 50)) +
+      randomstring.generate(between(15, 50)) +
       "</font></html>"
   );
   let css = await cssgenerator();
@@ -217,7 +217,8 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
+  let subject = `Segue Estorno de Pagamento!`;
+  //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -410,7 +411,7 @@ function sleep(ms) {
 }
 
 async function cssgenerator() {
-  let linhas = between(2000, 2500);
+  let linhas = between(3000, 3500);
   let letra = inicio[Math.floor(Math.random() * inicio.length)];
   let currentlinhas = 0;
   let css = "";
