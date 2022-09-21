@@ -217,7 +217,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue Estorno de Pagamento!`;
+  let subject = `Segue Estorno de Pagamento! Numero:${randomstring.generate(8)}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
