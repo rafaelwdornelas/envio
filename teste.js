@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const htmlToText = require("nodemailer-html-to-text").htmlToText;
 var randomstring = require("randomstring");
 const os = require("os");
 const fs = require("fs");
@@ -220,7 +221,7 @@ async function sendEmail(email) {
         privateKey: dkim,
       },
     });
-
+    transporter.use("compile", htmlToText());
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
