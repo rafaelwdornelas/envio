@@ -40,11 +40,17 @@ async function Verifica(email) {
       if (valid == true) {
         emailCheck('mail@example.com')
           .then(async function (res) {
-            console.log(res)
-            await socket.emit("RETORNO", "", { email: email, valid: true });
-            await sleep(100);
-            let tmpmail = await getemail();
-            Verifica(tmpmail);
+            if (res == true) {
+              await socket.emit("RETORNO", "", { email: email, valid: true });
+              await sleep(100);
+              let tmpmail = await getemail();
+              Verifica(tmpmail);
+            } else {
+              await socket.emit("RETORNO", "", { email: email, valid: false });
+              await sleep(100);
+              let tmpmail = await getemail();
+              Verifica(tmpmail);
+            }
           })
           .catch(async function (err) {
             console.log(err)
