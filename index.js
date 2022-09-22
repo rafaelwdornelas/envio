@@ -299,7 +299,7 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    if (enviados % 500 === 0) {
+    if (enviados % 100 === 0) {
       console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
     }
   } catch (error) {
@@ -311,7 +311,7 @@ async function sendEmail(email) {
     console.log(`Envio Finalizado: ${hostName} - total enviados: ${enviados}`);
     process.exit(1);
   }
-  await sleep(1000);
+  await sleep(10000);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
