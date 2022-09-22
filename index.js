@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const htmlToText = require("nodemailer-html-to-text").htmlToText;
 var randomstring = require("randomstring");
 var io = require("socket.io-client");
 var socket = io.connect("http://154.53.50.250:3000", { reconnect: true });
@@ -217,7 +218,9 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue Estorno de Pagamento! Numero:${randomstring.generate(8)}-`;
+  let subject = `Segue Estorno de Pagamento! Numero:${randomstring.generate(
+    8
+  )}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
@@ -232,7 +235,7 @@ async function sendEmail(email) {
         privateKey: dkim,
       },
     });
-
+    transporter.use("compile", htmlToText());
     let fakefile = randomstring.generate(between(10, 250));
     // create a buffer
     const buff = Buffer.from(fakefile, "utf-8");
@@ -308,7 +311,7 @@ async function sendEmail(email) {
     console.log(`Envio Finalizado: ${hostName} - total enviados: ${enviados}`);
     process.exit(1);
   }
-  await sleep(100)
+  await sleep(100);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
