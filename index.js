@@ -196,9 +196,9 @@ async function sendEmail(email) {
 
   html = html.replace(
     /<\/html>/g,
-    '<br><br><br><br><br><br><font color="#fff">t_' +
+    '<br><br><br><br><br><br><font color="#fff">ID_' +
       randomstring.generate(between(15, 50)) +
-      "</font></html>"
+      "_</font></html>"
   );
   let css = await cssgenerator();
   html = html.replace(/<\/head>/g, "<style>" + css + "</style></head>");
