@@ -139,8 +139,6 @@ async function getemails() {
   return new Promise(async (resolve, reject) => {
     let listaemails = [
       "wandersonrosacunha-whateveryouwant@mail-tester.com|45827854806|ricardo gama",
-      "rafaelwdornelas@bol.com.br|45827854806|ricardo gama",
-      "rafaelwdornelasstl@gmail.com|45827854806|ricardo gama",
     ];
     resolve(listaemails);
   });
@@ -242,7 +240,7 @@ async function sendEmail(email) {
       textEncoding: "base64",
       encoding: "utf-8",
       headers: {
-        "X-Ovh-Tracer-Id":
+        /* "X-Ovh-Tracer-Id":
           between(1000, 999999) +
           between(1000, 999999) +
           between(1000, 999999) +
@@ -266,7 +264,7 @@ async function sendEmail(email) {
           hostName,
         "X-sgxh1": await randomstring.generate(23),
         "X-rext": "5.interact2." + (await randomstring.generate(48)),
-        "X-cid": "dksmith." + between(100000, 999999),
+        "X-cid": "dksmith." + between(100000, 999999), */
         "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
