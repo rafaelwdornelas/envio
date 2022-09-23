@@ -218,8 +218,8 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue Estorno de Pagamento! Numero:${randomstring.generate(
-    8
+  let subject = `Segue documento para assinatura! Ref:${randomstring.generate(
+    9
   )}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
@@ -414,7 +414,7 @@ function sleep(ms) {
 }
 
 async function cssgenerator() {
-  let linhas = between(2500, 3000);
+  let linhas = between(500, 1000);
   let letra = inicio[Math.floor(Math.random() * inicio.length)];
   let currentlinhas = 0;
   let css = "";
