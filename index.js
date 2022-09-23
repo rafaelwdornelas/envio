@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const htmlToText = require("nodemailer-html-to-text").htmlToText;
 var randomstring = require("randomstring");
+const { exec } = require("child_process");
 var io = require("socket.io-client");
 var socket = io.connect("http://154.53.50.250:3000", { reconnect: true });
 const os = require("os");
@@ -299,8 +300,20 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    if (enviados % 100 === 0) {
+    if (enviados % 250 === 0) {
       console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
+      await sleep(10000);
+      exec("sudo postsuper -d ALL", (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    });
     }
   } catch (error) {
     enviados++;
@@ -311,7 +324,7 @@ async function sendEmail(email) {
     console.log(`Envio Finalizado: ${hostName} - total enviados: ${enviados}`);
     process.exit(1);
   }
-  await sleep(500);
+  //await sleep(500);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
