@@ -35,9 +35,9 @@ sudo postconf -e 'smtpd_tls_cert_file = /etc/configs/ssl/new/certificado.cer'
 sudo postconf -e 'smtpd_tls_CAfile = /etc/configs/ssl/new/cacert.pem'
 sudo postconf -e 'queue_run_delay = 200s'
 sudo postconf -e 'minimal_backoff_time = 300s'
-sudo postconf -e 'maximal_backoff_time = 1200s'
+sudo postconf -e 'maximal_backoff_time = 600s'
 sudo postconf -e 'maximal_queue_lifetime = 600s'
-sudo postconf -e 'bounce_queue_lifetime = 1200s'
+sudo postconf -e 'bounce_queue_lifetime = 600s'
 sudo postconf -e smtpd_use_tls=yes
 sudo apt-get install mutt  -y
 sudo apt install mailutils  -y
