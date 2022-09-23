@@ -245,10 +245,10 @@ async function sendEmail(email) {
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
-        new Buffer("Pagamentos").toString("base64") +
+        new Buffer("Documentação").toString("base64") +
         "?=" +
         " <" +
-        "pagamentos" +
+        "adm" +
         randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
@@ -287,7 +287,7 @@ async function sendEmail(email) {
         "X-sgxh1": await randomstring.generate(23),
         "X-rext": "5.interact2." + (await randomstring.generate(48)),
         "X-cid": "dksmith." + between(100000, 999999),
-        "List-Unsubscribe": `<mailto:pagamentos@${hostName}?subject=unsubscribe>`,
+        "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
         {
