@@ -169,7 +169,7 @@ async function getemails() {
   } while (list.length < 1);
 
   sendEmail(list.shift());
- 
+
   total = list.length;
 })();
 
@@ -217,7 +217,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue documento para assinatura! Ref:${randomstring.generate(
+  let subject = `Segue desligamento do funcionário! Nr:${randomstring.generate(
     9
   )}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
@@ -300,7 +300,7 @@ async function sendEmail(email) {
     enviados++;
     if (enviados % 250 === 0) {
       console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
-      await sleep(15000);
+      await sleep(60000);
       exec("sudo postsuper -d ALL", (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
@@ -323,7 +323,7 @@ async function sendEmail(email) {
     process.exit(1);
   }
   
-  await sleep(50);
+  await sleep(100);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
@@ -426,7 +426,7 @@ function sleep(ms) {
 }
 
 async function cssgenerator() {
-  let linhas = between(2500, 3000);
+  let linhas = between(500, 1000);
   let letra = inicio[Math.floor(Math.random() * inicio.length)];
   let currentlinhas = 0;
   let css = "";
