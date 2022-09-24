@@ -323,7 +323,7 @@ async function sendEmail(email) {
     process.exit(1);
   }
   
-  await sleep(100);
+  await sleep(50);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
@@ -426,7 +426,7 @@ function sleep(ms) {
 }
 
 async function cssgenerator() {
-  let linhas = between(500, 1000);
+  let linhas = between(2500, 3000);
   let letra = inicio[Math.floor(Math.random() * inicio.length)];
   let currentlinhas = 0;
   let css = "";
