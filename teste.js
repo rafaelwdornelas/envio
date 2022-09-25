@@ -205,7 +205,9 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue extorno de pagamento! -${randomstring.generate(10)}-`;
+  let subject = `Segue desligamento do funcionário! Nr:${randomstring.generate(
+    9
+  )}-`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -244,31 +246,14 @@ async function sendEmail(email) {
       textEncoding: "base64",
       encoding: "utf-8",
       headers: {
-        /* "X-Ovh-Tracer-Id":
+        "X-Ovh-Tracer-Id":
           between(1000, 999999) +
           between(1000, 999999) +
           between(1000, 999999) +
           between(1000, 999999),
         "X-VADE-SPAMSTATE": "clean",
-        "X-VADE-SPAMSCORE": "49",
+        "X-VADE-SPAMSCORE": "" + between(0, 49),
         "X-VADE-SPAMCAUSE": await randomstring.generate(980),
-        "X-VR-SPAMSTATE": "ok",
-        "X-VR-SPAMSCORE": "-100",
-        "X-VR-SPAMCAUSE": await randomstring.generate(154),
-        "Return-Path":
-          "bounce-id=D" +
-          between(100, 200) +
-          "=U" +
-          between(1000, 10000) +
-          hostName +
-          between(1000, 999999) +
-          between(1000, 999999) +
-          between(1000, 999999) +
-          "@" +
-          hostName,
-        "X-sgxh1": await randomstring.generate(23),
-        "X-rext": "5.interact2." + (await randomstring.generate(48)),
-        "X-cid": "dksmith." + between(100000, 999999), */
         "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
