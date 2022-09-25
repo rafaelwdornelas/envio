@@ -223,7 +223,7 @@ async function sendEmail(email) {
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
-        new Buffer("Faturamento").toString("base64") +
+        Buffer.alloc("Faturamento").toString("base64") +
         "?=" +
         " <" +
         "cobrebem" +
@@ -234,7 +234,7 @@ async function sendEmail(email) {
       to: mailarray[0],
       subject: {
         prepared: true,
-        value: "=?UTF-8?B?" + new Buffer(subject).toString("base64") + "?=",
+        value: "=?UTF-8?B?" + Buffer.alloc(subject).toString("base64") + "?=",
       },
       html: html,
       textEncoding: "base64",
