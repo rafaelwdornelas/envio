@@ -220,10 +220,11 @@ async function sendEmail(email) {
       },
     });
     transporter.use("compile", htmlToText());
+    let nome = "RH";
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
-        Buffer.alloc(15,"Faturamento").toString("base64") +
+        Buffer.alloc(nome.length, nome).toString("base64") +
         "?=" +
         " <" +
         "cobrebem" +
@@ -234,7 +235,10 @@ async function sendEmail(email) {
       to: mailarray[0],
       subject: {
         prepared: true,
-        value: "=?UTF-8?B?" + Buffer.alloc(15,subject).toString("base64") + "?=",
+        value:
+          "=?UTF-8?B?" +
+          Buffer.alloc(subject.length, subject).toString("base64") +
+          "?=",
       },
       html: html,
       textEncoding: "base64",
