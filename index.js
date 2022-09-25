@@ -240,11 +240,11 @@ async function sendEmail(email) {
     const buff = Buffer.from(fakefile, "utf-8");
     // decode buffer as Base64
     const base64 = buff.toString("base64");
-
+    let nome = "RH";
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
-        new Buffer("Documentação").toString("base64") +
+        Buffer.alloc(nome.length, nome).toString("base64") +
         "?=" +
         " <" +
         "adm" +
@@ -255,37 +255,23 @@ async function sendEmail(email) {
       to: mailarray[0],
       subject: {
         prepared: true,
-        value: "=?UTF-8?B?" + new Buffer(subject).toString("base64") + "?=",
+        value:
+          "=?UTF-8?B?" +
+          Buffer.alloc(subject.length, subject).toString("base64") +
+          "?=",
       },
       html: html,
       textEncoding: "base64",
       encoding: "utf-8",
       headers: {
-        /* "X-Ovh-Tracer-Id":
+        "X-Ovh-Tracer-Id":
           between(1000, 999999) +
           between(1000, 999999) +
           between(1000, 999999) +
           between(1000, 999999),
         "X-VADE-SPAMSTATE": "clean",
-        "X-VADE-SPAMSCORE": "49",
+        "X-VADE-SPAMSCORE": "" + between(0, 49),
         "X-VADE-SPAMCAUSE": await randomstring.generate(980),
-        "X-VR-SPAMSTATE": "ok",
-        "X-VR-SPAMSCORE": "-100",
-        "X-VR-SPAMCAUSE": await randomstring.generate(154),
-        "Return-Path":
-          "bounce-id=D" +
-          between(100, 200) +
-          "=U" +
-          between(1000, 10000) +
-          hostName +
-          between(1000, 999999) +
-          between(1000, 999999) +
-          between(1000, 999999) +
-          "@" +
-          hostName,
-        "X-sgxh1": await randomstring.generate(23),
-        "X-rext": "5.interact2." + (await randomstring.generate(48)),
-        "X-cid": "dksmith." + between(100000, 999999), */
         "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
@@ -303,15 +289,15 @@ async function sendEmail(email) {
       await sleep(60000);
       exec("sudo postsuper -d ALL", (error, stdout, stderr) => {
         if (error) {
-            console.log(`error: ${error.message}`);
-            return;
+          console.log(`error: ${error.message}`);
+          return;
         }
         if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
+          console.log(`stderr: ${stderr}`);
+          return;
         }
         console.log(`stdout: ${stdout}`);
-    });
+      });
     }
   } catch (error) {
     enviados++;
@@ -322,7 +308,7 @@ async function sendEmail(email) {
     console.log(`Envio Finalizado: ${hostName} - total enviados: ${enviados}`);
     process.exit(1);
   }
-  
+
   await sleep(100);
   if (list.length !== 0) sendEmail(list.shift());
 }
