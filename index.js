@@ -309,7 +309,7 @@ async function sendEmail(email) {
     process.exit(1);
   }
 
-  await sleep(100);
+  await sleep(50);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
