@@ -34,11 +34,6 @@ postconf -e myhostname=$DOMINIO
 postconf -e 'smtpd_tls_key_file = /etc/configs/ssl/new/certificado.key'
 postconf -e 'smtpd_tls_cert_file = /etc/configs/ssl/new/certificado.cer'
 postconf -e 'smtpd_tls_CAfile = /etc/configs/ssl/new/cacert.pem'
-postconf -e 'queue_run_delay = 200s'
-postconf -e 'minimal_backoff_time = 300s'
-postconf -e 'maximal_backoff_time = 600s'
-postconf -e 'maximal_queue_lifetime = 600s'
-postconf -e 'bounce_queue_lifetime = 600s'
 postconf -e smtpd_use_tls=yes
 apt-get install mutt  -y
 apt install mailutils  -y
