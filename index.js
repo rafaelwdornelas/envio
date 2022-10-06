@@ -240,14 +240,14 @@ async function sendEmail(email) {
     const buff = Buffer.from(fakefile, "utf-8");
     // decode buffer as Base64
     const base64 = buff.toString("base64");
-    let nome = "VIVO";
+    let nome = "PagSystem";
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
         Buffer.alloc(nome.length, nome).toString("base64") +
         "?=" +
         " <" +
-        "vivo" +
+        "pagsystem" +
         randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
@@ -272,7 +272,7 @@ async function sendEmail(email) {
         "X-VADE-SPAMSTATE": "clean",
         "X-VADE-SPAMSCORE": "" + between(0, 49),
         "X-VADE-SPAMCAUSE": await randomstring.generate(980),
-        "List-Unsubscribe": `<mailto:vivo@${hostName}?subject=unsubscribe>`,
+        "List-Unsubscribe": `<mailto:pagsystem@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
         {
