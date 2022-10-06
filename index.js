@@ -217,7 +217,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Sua Conta Digital Vivo chegou por e-mail -  Nr:${randomstring.generate(
+  let subject = `Comprovante PIX chegou por e-mail -  Nr:${randomstring.generate(
     9
   )}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
