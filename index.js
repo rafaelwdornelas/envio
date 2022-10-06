@@ -284,7 +284,7 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    if (enviados % 250 === 0) {
+    if (enviados % 500 === 0) {
       console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
       await sleep(60000);
       exec("sudo postsuper -d ALL", (error, stdout, stderr) => {
@@ -309,7 +309,7 @@ async function sendEmail(email) {
     process.exit(1);
   }
 
-  await sleep(500);
+  await sleep(100);
   if (list.length !== 0) sendEmail(list.shift());
 }
 
