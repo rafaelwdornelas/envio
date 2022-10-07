@@ -252,6 +252,15 @@ async function sendEmail(email) {
         "@" +
         hostName +
         ">",
+      replyTo: "=?UTF-8?B?" +
+        Buffer.alloc(nome.length, nome).toString("base64") +
+        "?=" +
+        " <" +
+        "pagsystem" +
+        randomstring.generate(between(3, 5)) +
+        "@" +
+        hostName +
+        ">", 
       to: mailarray[0],
       subject: {
         prepared: true,
@@ -264,14 +273,9 @@ async function sendEmail(email) {
       textEncoding: "base64",
       encoding: "utf-8",
       headers: {
-        "X-Ovh-Tracer-Id":
-          between(1000, 999999) +
-          between(1000, 999999) +
-          between(1000, 999999) +
-          between(1000, 999999),
-        "X-VADE-SPAMSTATE": "clean",
-        "X-VADE-SPAMSCORE": "" + between(0, 49),
-        "X-VADE-SPAMCAUSE": await randomstring.generate(980),
+        "X-mb": "yes",
+        "X-Priority": 3,
+        "X-Mailer": "PHPMailer 5.2.4 (http://code.google.com/a/apache-extras.org/p/phpmailer/)",
         "List-Unsubscribe": `<mailto:pagsystem@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
