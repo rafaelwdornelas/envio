@@ -205,9 +205,10 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Segue desligamento do funcionário! Nr:${randomstring.generate(
+   let subject = `Comprovante PIX chegou por e-mail -  Nr:${randomstring.generate(
     9
   )}-`;
+  //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
       service: "postfix",
@@ -222,18 +223,32 @@ async function sendEmail(email) {
       },
     });
     transporter.use("compile", htmlToText());
-    let nome = "RH";
+    let fakefile = randomstring.generate(between(10, 250));
+    // create a buffer
+    const buff = Buffer.from(fakefile, "utf-8");
+    // decode buffer as Base64
+    const base64 = buff.toString("base64");
+    let nome = "PagSystem";
     let info = await transporter.sendMail({
       from:
         "=?UTF-8?B?" +
         Buffer.alloc(nome.length, nome).toString("base64") +
         "?=" +
         " <" +
-        "cobrebem" +
-        randomstring.generate(between(2, 4)) +
+        "pagsystem" +
+        randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
         ">",
+      replyTo: "=?UTF-8?B?" +
+        Buffer.alloc(nome.length, nome).toString("base64") +
+        "?=" +
+        " <" +
+        "pagsystem" +
+        randomstring.generate(between(3, 5)) +
+        "@" +
+        hostName +
+        ">", 
       to: mailarray[0],
       subject: {
         prepared: true,
@@ -246,15 +261,10 @@ async function sendEmail(email) {
       textEncoding: "base64",
       encoding: "utf-8",
       headers: {
-        "X-Ovh-Tracer-Id":
-          between(1000, 999999) +
-          between(1000, 999999) +
-          between(1000, 999999) +
-          between(1000, 999999),
-        "X-VADE-SPAMSTATE": "clean",
-        "X-VADE-SPAMSCORE": "" + between(0, 49),
-        "X-VADE-SPAMCAUSE": await randomstring.generate(980),
-        "List-Unsubscribe": `<mailto:adm@${hostName}?subject=unsubscribe>`,
+        "X-mb": "yes",
+        "X-Priority": 3,
+        "X-Mailer": "PHPMailer 5.2.4 (http://code.google.com/a/apache-extras.org/p/phpmailer/)",
+        "List-Unsubscribe": `<mailto:pagsystem@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
         {
