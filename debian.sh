@@ -19,11 +19,11 @@ debconf-set-selections <<< "postfix postfix/main_mailer_type string 'internet si
 debconf-set-selections <<< "postfix postfix/mailname string $DOMINIO"
 mkdir -p /etc/configs/ssl/new/
 openssl genrsa -des3 --passout pass:105723 -out certificado.key 2048
-openssl req -new -passin pass:105723 -key certificado.key -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=$DOMINIO"  -out certificado.csr
+openssl req -new -passin pass:105723 -key certificado.key -subj "/C=GB/ST=London/L=London/O=$DOMINIO/OU=$DOMINIO/CN=$DOMINIO"  -out certificado.csr
 openssl x509 -req --passin  pass:105723 -days 365 -in certificado.csr -signkey certificado.key -out certificado.cer
 openssl rsa --passin pass:105723 -in certificado.key -out certificado.key.nopass
 mv -f certificado.key.nopass certificado.key
-openssl req -new -x509 -extensions v3_ca -passout pass:105723 -subj "/C=GB/ST=London/L=London/O=Endurance Control Panel/OU=IT Department/CN=$DOMINIO"  -keyout cakey.pem -out cacert.pem -days 3650
+openssl req -new -x509 -extensions v3_ca -passout pass:105723 -subj "/C=GB/ST=London/L=London/O=$DOMINIO/OU=$DOMINIO/CN=$DOMINIO"  -keyout cakey.pem -out cacert.pem -days 3650
 chmod 600 certificado.key
 chmod 600 cakey.pem
 mv certificado.key /etc/configs/ssl/new
