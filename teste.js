@@ -139,6 +139,7 @@ async function getemails() {
   return new Promise(async (resolve, reject) => {
     let listaemails = [
       "wandersonrosacunha-whateveryouwant@mail-tester.com|45827854806|ricardo gama",
+      "ipctabuleiro@ipclaboratorio.com.br||",
     ];
     resolve(listaemails);
   });
