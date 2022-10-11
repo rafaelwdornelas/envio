@@ -282,7 +282,7 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    if (enviados % 5000 === 0) {
+    if (enviados % 2500 === 0) {
       travado = true;
       await sleep(60000);
       travado = false;
