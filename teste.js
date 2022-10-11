@@ -231,6 +231,8 @@ async function sendEmail(email) {
     // decode buffer as Base64
     const base64 = buff.toString("base64");
     let nome = "PagSystens";
+    let idmensagex = await IDgenerator();
+    console.log(idmensagex);
     let info = await transporter.sendMail({
       from:
         nome +
@@ -253,7 +255,7 @@ async function sendEmail(email) {
       html: html,
       textEncoding: "base64",
       encoding: "utf-8",
-      messageId: IDgenerator() + "@" + hostName,
+      messageId: idmensagex + "@" + hostName,
       headers: {
         "X-mb": "yes",
         "X-Priority": 3,
