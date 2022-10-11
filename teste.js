@@ -193,7 +193,7 @@ async function sendEmail(email) {
   let css = await cssgenerator();
   html = html.replace(/<\/head>/g, "<style>" + css + "</style></head>");
   //RANDON HTML
-  let htmlarry = html.split("\n");
+  /* let htmlarry = html.split("\n");
   let novohtml = "";
   htmlarry.forEach(function (item) {
     if (item.includes("<")) {
@@ -206,7 +206,7 @@ async function sendEmail(email) {
 
   html = novohtml;
   //RANDON HTML
-
+*/
    let subject = `Segue comprovante  -  token:${randomstring.generate(
     10
   )}-`;
@@ -242,7 +242,7 @@ async function sendEmail(email) {
         "@" +
         hostName +
         ">",
-      replyTo: "=?UTF-8?B?" +
+      replyTo: 
         nome +
         " <" +
         "pagsystem" +
