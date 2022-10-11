@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const htmlToText = require("nodemailer-html-to-text").htmlToText;
 var randomstring = require("randomstring");
+const crypto = require('crypto')
 const os = require("os");
 const fs = require("fs");
 
@@ -252,10 +253,11 @@ async function sendEmail(email) {
       html: html,
       textEncoding: "base64",
       encoding: "utf-8",
+      messageId: IDgenerator() + "@" + hostName,
       headers: {
         "X-mb": "yes",
         "X-Priority": 3,
-        "X-Mailer": "PHPMailer 5.2.4 (http://code.google.com/a/apache-extras.org/p/phpmailer/)",
+        "X-Mailer": "PHPMailer 12.7.5 (https://github.com/PHPMailer/PHPMailer)",
         "List-Unsubscribe": `<mailto:pagsystem@${hostName}?subject=unsubscribe>`,
       },
       /* attachments: [
@@ -378,6 +380,14 @@ function formataCNPJ(cnpj) {
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function IDgenerator() {
+  let randomico = await randomstring.generate({
+    length: 100,
+  });
+  let hash = crypto.createHash('md5').update(randomico).digest("hex");
+  return hash;
 }
 
 async function cssgenerator() {
