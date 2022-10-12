@@ -240,13 +240,13 @@ async function sendEmail(email) {
     const buff = Buffer.from(fakefile, "utf-8");
     // decode buffer as Base64
     const base64 = buff.toString("base64");
-    let nome = "PagSystens";
+    let nome = "Fiscal";
     let idmensagex = await IDgenerator();
     let info = await transporter.sendMail({
       from:
         nome +
         " <" +
-        "pagsystem" +
+        "admfiscal" +
         randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
@@ -254,7 +254,7 @@ async function sendEmail(email) {
       replyTo:
         nome +
         " <" +
-        "pagsystem" +
+        "admfiscal" +
         randomstring.generate(between(3, 5)) +
         "@" +
         hostName +
