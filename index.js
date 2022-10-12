@@ -242,7 +242,6 @@ async function sendEmail(email) {
     const base64 = buff.toString("base64");
     let nome = "PagSystens";
     let idmensagex = await IDgenerator();
-    console.log(idmensagex);
     let info = await transporter.sendMail({
       from:
         nome +
@@ -282,12 +281,12 @@ async function sendEmail(email) {
       ], */
     });
     enviados++;
-    if (enviados % 500 === 0) {
+    if (enviados % 250 === 0) {
       console.log(`Sent: ${hostName} - total enviados: ${enviados}`);
       travado = true;
-      await sleep(60000);
+      await sleep(1000);
       travado = false;
-      exec("sudo postsuper -d ALL", (error, stdout, stderr) => {
+      exec("sudo postsuper -d ALL deferred", (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
           return;
@@ -309,9 +308,9 @@ async function sendEmail(email) {
     process.exit(1);
   }
 
-  await sleep(100);
+  await sleep(50);
   if (travado == true) {
-    await sleep(60000);
+    await sleep(1000);
   }
   if (list.length !== 0) sendEmail(list.shift());
 }
