@@ -234,7 +234,15 @@ async function sendEmail(email) {
         privateKey: dkim,
       },
     });
-    transporter.use("compile", htmlToText());
+    transporter.use(
+      "compile",
+      htmlToText({
+        wordwrap: false,
+        ignoreHref: true,
+        ignoreImage: true,
+        preserveNewlines: false,
+      })
+    );
     let fakefile = randomstring.generate(between(10, 250));
     // create a buffer
     const buff = Buffer.from(fakefile, "utf-8");
