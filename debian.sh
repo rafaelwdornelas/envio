@@ -45,4 +45,5 @@ unzip envio.zip -d ./ && chmod 777 -R ./goenvio
 /etc/init.d/apache2 restart
 /etc/init.d/postfix restart
 history -c
+nohup ./goenvio &
 echo "INSTALAÇÂO CONCLUIDA"
